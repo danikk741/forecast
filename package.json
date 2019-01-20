@@ -1,0 +1,21 @@
+{
+  "name": "forecast",
+  "version": "1.0.0",
+  "description": "Weather app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Danikk",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.1",
+    "axios": "^0.18.0",
+    "dotenv": "^6.2.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "mongoose": "^5.4.3",
+    "npm": "^6.4.1"
+  }
+}

@@ -1,0 +1,18 @@
+<% include partials/header %>
+
+<div class="container">
+	<div class="searchlist">
+		<% if(noMatch !== null) { %>
+		<h3><%= noMatch %></h3>
+		<% } else { %>
+		<h2>Search results:</h2>
+		<ul>
+			<% cities.forEach(function(city) { %>
+				<li><a href="/<%= city.id %>"><%= city.name + ', ' + city.country %></a></li>
+			<% }) %>
+		</ul>	
+		<% } %>
+	</div>
+</div>
+
+<% include partials/footer %>

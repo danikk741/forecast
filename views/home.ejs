@@ -1,0 +1,96 @@
+	<% include partials/header %>
+	<%
+	var description = data.weather[0].description;
+	function timeForUpdate(UNIX_timestamp) {
+		var a = new Date(UNIX_timestamp * 1000);
+		var hour = "0" + a.getHours();
+		var min = "0" + a.getMinutes();
+		var time = hour.substr(-2) + ':' + min.substr(-2);
+		return time;
+	}
+	function timeConverter(UNIX_timestamp) {
+		var a = new Date(UNIX_timestamp * 1000);
+		var months = [
+			"Jan",
+			"Feb",
+			"Mar",
+			"Apr",
+			"May",
+			"Jun",
+			"Jul",
+			"Aug",
+			"Sep",
+			"Oct",
+			"Nov",
+			"Dec"
+		];
+		var year = a.getFullYear();
+		var month = months[a.getMonth()];
+		var date = a.getDate();
+		var hour = "0" + a.getHours();
+		var min = "0" + a.getMinutes();
+		var time = hour.substr(-2) + ":" + min.substr(-2) + " " + month + " " + date;
+		return time;
+	}
+%>
+
+<div class="container">
+    <div id="current">
+        <h2>Weather in <%= data.name %>, <%= data.sys.country %></h2>
+        <h3>
+						<img src="https://openweathermap.org/img/w/<%= data.weather[0].icon %>.png" alt="Weather in Astana"> <%= data.main.temp %> °C
+				</h3>
+				<p><%= description.charAt(0).toUpperCase() + description.slice(1) %></p>
+				<p>Updated at <%= timeConverter(data.dt) %></p>
+				<table>
+					<tbody>
+						<tr>
+							<td>Wind</td>
+							<td><%= data.wind.speed %> m/s </td>
+						</tr>
+						<tr>
+							<td>Cloudiness</td>
+							<td><%= data.clouds.all %>% </td>
+						</tr>
+						<tr>
+							<td>Pressure</td>
+							<td><%= data.main.pressure %> hPa </td>
+						</tr>
+						<tr>
+							<td>Humidity</td>
+							<td><%= data.main.humidity %>%</td>
+						</tr>
+						<tr>
+							<td>Sunrise</td>
+							<td><%= timeForUpdate(data.sys.sunrise) %></td>
+						</tr>
+						<tr>
+							<td>Sunset</td>
+							<td><%= timeForUpdate(data.sys.sunset) %></td>
+						</tr>
+					</tbody>
+				</table>
+		</div> <!-- #current -->
+		<div id="forecast">
+		<h2>Hourly forecasts</h2>
+		<table>
+		<tbody>
+			<% forecast.list.forEach(function(item) { %>
+			<tr>
+				<td class="forecastItem">
+					<%= timeConverter(item.dt) %> <img src="https://openweathermap.org/img/w/<%= item.weather[0].icon %>.png" alt="Weather in <%= data.name %>">
+				</td>
+				<td>
+					<span class="forecastTemp"><%= item.main.temp %>  °C</span>
+					<i><%= item.weather[0].description %></i>
+					<p class="forecastAll"><%= item.wind.speed %> m/s, clouds: <%= item.clouds.all %>%, <%= item.main.pressure %> hPa</p>
+				</td>
+			</tr>
+			<% }) %>
+		</tbody>
+	</table>
+		</div>
+</div> <!-- #container -->
+
+
+<% include partials/footer %>
